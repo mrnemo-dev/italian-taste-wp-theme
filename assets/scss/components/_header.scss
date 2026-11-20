@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Хедер сайта
+   ==========================================================================
+   Структура:
+   .site-header
+   ├── .container (ограничение ширины)
+   │   ├── .site-header__logo (логотип)
+   │   ├── .site-header__nav (навигация)
+   │   │   └── ul > li > a
+   │   └── .site-header__actions (кнопки: тема + бронирование)
+   ========================================================================== */
+
+.site-header {
+    background-color: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+    }
+    
+    &__logo {
+        font-family: var(--font-heading);
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--color-accent-primary);
+        text-decoration: none;
+        transition: color var(--transition-speed);
+        
+        &:hover {
+            color: var(--color-accent-terracotta);
+        }
+    }
+    
+    &__nav {
+        flex: 1;
+        
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+        
+        a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color var(--transition-speed);
+            
+            &:hover {
+                color: var(--color-accent-primary);
+            }
+        }
+    }
+    
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+// Кнопка переключения темы
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all var(--transition-speed);
+    
+    &:hover {
+        background-color: var(--color-bg-card-hover);
+        border-color: var(--color-accent-primary);
+    }
+}
+
+// Кнопка "Забронировать"
+.btn-reserve {
+    background-color: var(--color-accent-primary);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--transition-speed);
+    
+    &:hover {
+        background-color: var(--color-accent-terracotta);
+    }
+}

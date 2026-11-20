@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Секция "Преимущества"
+   ==========================================================================
+   Три карточки в ряд + волнистый разделитель сверху + точки по бокам.
+   Без блоба — секция низкая, блоб будет доминировать.
+   ========================================================================== */
+
+.features {
+    padding: 80px 0 100px;
+    background-color: var(--color-bg-secondary);
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--transition-speed);
+
+    // Волнистый разделитель сверху
+    &__wave {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        overflow: hidden;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    }
+
+    // Точки-акценты (как рассыпанные специи)
+    &__dots {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    &__dot {
+        position: absolute;
+        border-radius: 50%;
+        background-color: var(--color-accent-primary);
+        opacity: 0.3;
+        transition: background-color var(--transition-speed);
+    }
+
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    &__eyebrow {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent-primary);
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 42px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0 0 60px;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+    }
+}
+
+// Карточка преимущества
+.feature-card {
+    background-color: var(--color-bg-card);
+    border-radius: var(--border-radius);
+    padding: 40px 30px;
+    text-align: center;
+    transition: all var(--transition-speed);
+    border: 1px solid transparent;
+
+    &:hover {
+        transform: translateY(-8px);
+        border-color: var(--color-accent-primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    &__icon {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 24px;
+        background-color: var(--color-accent-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;  // currentColor для SVG = белый
+        transition: background-color var(--transition-speed), transform var(--transition-speed);
+
+        // SVG иконки
+        svg {
+            width: 40px;
+            height: 40px;
+            fill: currentColor;  // Наследует белый цвет от родителя
+        }
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0 0 16px;
+    }
+
+    &__text {
+        font-family: var(--font-body);
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin: 0;
+    }
+}
+
+// Адаптив: планшеты
+@media (max-width: 992px) {
+    .features {
+        &__grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        &__title {
+            font-size: 36px;
+        }
+    }
+}
+
+// Адаптив: мобильные
+@media (max-width: 768px) {
+    .features {
+        padding: 60px 0 80px;
+
+        &__wave {
+            height: 60px;
+        }
+
+        // Убираем точки на мобильных — они мешают
+        &__dots {
+            display: none;
+        }
+
+        &__grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        &__title {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+    }
+
+    .feature-card {
+        padding: 30px 20px;
+
+        &__icon {
+            width: 70px;
+            height: 70px;
+
+            svg {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        &__title {
+            font-size: 22px;
+        }
+
+        &__text {
+            font-size: 15px;
+        }
+    }
+}
+
+// Волна снизу секции преимуществ
+.features::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; // -1px чтобы не было зазора
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C360,0 720,100 1080,50 C1260,25 1380,40 1440,50 L1440,100 L0,100 Z' fill='%230a0a0a'/%3E%3C/svg%3E") no-repeat center;
+    background-size: cover;
+    z-index: 2;
+    pointer-events: none;
+}
+
+// Для светлой темы меняем цвет волны
+[data-theme="light"] .features::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C360,0 720,100 1080,50 C1260,25 1380,40 1440,50 L1440,100 L0,100 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat center;
+}

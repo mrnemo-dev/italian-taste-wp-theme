@@ -1,0 +1,114 @@
+/* ==========================================================================
+   Настройки темы: цвета, шрифты, размеры
+   ==========================================================================
+   Почему два набора переменных:
+   Мы делаем одну дизайн-систему, которая переключается между светлой и
+   тёмной темой через CSS-переменные. Это позволяет менять тему "на лету"
+   без перезагрузки страницы и без дублирования CSS-правил.
+   
+   По умолчанию — тёмная тема (премиальный вид, как в Maison Savour).
+   Светлая тема включается через атрибут data-theme="light" на <html>.
+   ========================================================================== */
+
+// --- ТЁМНАЯ ТЕМА (по умолчанию) ---
+// Вдохновлено Maison Savour: глубокий чёрный + оранжевый акцент
+
+$color-bg-primary:       #0a0a0a;    // Основной фон (почти чёрный)
+$color-bg-secondary:     #1a1a1a;    // Фон секций
+$color-bg-card:          #222222;    // Фон карточек блюд
+$color-bg-card-hover:    #2a2a2a;    // Фон карточки при наведении
+
+$color-accent-primary:   #ff6b35;    // Оранжевый — главный акцент (кнопки, ссылки)
+$color-accent-secondary: #ffd700;    // Золотой — для рейтингов, звёзд
+$color-accent-terracotta:#c75b39;    // Терракотовый — итальянский колорит
+
+$color-text-primary:     #ffffff;    // Основной текст
+$color-text-secondary:   #a0a0a0;    // Вторичный текст (подписи, даты)
+$color-text-muted:       #666666;    // Приглушённый текст
+
+$color-border:           rgba(255, 107, 53, 0.3);  // Полупрозрачная оранжевая рамка
+
+// --- СВЕТЛАЯ ТЕМА ---
+// Вдохновлено Foodeza: белый + оливковый (свежесть, итальянская кухня)
+
+$light-color-bg-primary:       #ffffff;    // Белый фон
+$light-color-bg-secondary:     #f8f9fa;    // Светло-серый для секций
+$light-color-bg-card:          #ffffff;    // Белые карточки
+$light-color-bg-card-hover:    #f0f0f0;    // Лёгкий серый при наведении
+
+$light-color-accent-primary:   #2d5a27;    // Оливково-зелёный (базилик)
+$light-color-accent-secondary: #ff6b35;    // Оранжевый (томаты, сохраняем для кнопок)
+$light-color-accent-terracotta:#c75b39;    // Терракотовый
+
+$light-color-text-primary:     #1a1a1a;    // Почти чёрный текст
+$light-color-text-secondary:   #666666;    // Серый текст
+$light-color-text-muted:       #999999;    // Светло-серый
+
+$light-color-border:           rgba(45, 90, 39, 0.2);  // Полупрозрачная зелёная рамка
+
+// --- ШРИФТЫ ---
+// Playfair Display — для заголовков (элегантный, итальянский стиль)
+// Inter — для основного текста (читаемый, современный)
+
+$font-heading: 'Playfair Display', serif;
+$font-body:    'Inter', sans-serif;
+
+// --- РАЗМЕРЫ ---
+$container-max-width: 1200px;  // Максимальная ширина контента
+$border-radius:        8px;    // Скругление углов карточек
+$transition-speed:     0.3s;   // Скорость анимаций
+
+/* ==========================================================================
+   CSS-переменные для runtime-переключения тем
+   ==========================================================================
+   Зачем: SCSS-переменные ($color-bg-primary) компилируются в статические
+   значения и не могут меняться через JavaScript. CSS-переменные (--color-bg)
+   живут в браузере и меняются "на лету" через document.documentElement.style
+   или атрибут data-theme.
+   
+   По умолчанию (без атрибута) — тёмная тема.
+   При data-theme="light" на <html> — светлая тема.
+   ========================================================================== */
+
+:root {
+    // Тёмная тема (по умолчанию)
+    --color-bg-primary: #{$color-bg-primary};
+    --color-bg-secondary: #{$color-bg-secondary};
+    --color-bg-card: #{$color-bg-card};
+    --color-bg-card-hover: #{$color-bg-card-hover};
+    
+    --color-accent-primary: #{$color-accent-primary};
+    --color-accent-secondary: #{$color-accent-secondary};
+    --color-accent-terracotta: #{$color-accent-terracotta};
+    
+    --color-text-primary: #{$color-text-primary};
+    --color-text-secondary: #{$color-text-secondary};
+    --color-text-muted: #{$color-text-muted};
+    
+    --color-border: #{$color-border};
+    
+    --font-heading: #{$font-heading};
+    --font-body: #{$font-body};
+    
+    --container-max-width: #{$container-max-width};
+    --border-radius: #{$border-radius};
+    --transition-speed: #{$transition-speed};
+}
+
+// Светлая тема — переопределяем переменные при атрибуте data-theme="light"
+[data-theme="light"] {
+    --color-bg-primary: #{$light-color-bg-primary};
+    --color-bg-secondary: #{$light-color-bg-secondary};
+    --color-bg-card: #{$light-color-bg-card};
+    --color-bg-card-hover: #{$light-color-bg-card-hover};
+    
+    --color-accent-primary: #{$light-color-accent-primary};
+    --color-accent-secondary: #{$light-color-accent-secondary};
+    --color-accent-terracotta: #{$light-color-accent-terracotta};
+    
+    --color-text-primary: #{$light-color-text-primary};
+    --color-text-secondary: #{$light-color-text-secondary};
+    --color-text-muted: #{$light-color-text-muted};
+    
+    --color-border: #{$light-color-border};
+}

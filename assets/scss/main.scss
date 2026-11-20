@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Точка входа SCSS — Italian Taste
+   ==========================================================================
+   ВАЖНО: все @use должны идти в самом начале файла, до любых CSS-правил.
+   Это требование синтаксиса Sass — иначе компилятор падает с ошибкой.
+   ========================================================================== */
+
+// 1. SETTINGS — переменные + CSS-переменные для тем
+@use 'settings/variables' as *;
+
+// 2. COMPONENTS — хедер (подключаем ДО стилей body, чтобы переопределить базовые)
+@use 'components/header' as *;
+@use 'components/hero' as *;
+@use 'components/about' as *;
+@use 'components/features' as *;
+@use 'components/menu' as *;
+@use 'components/showcase' as *;
+@use 'components/footer' as *;
+@use 'components/reviews' as *;
+@use 'components/booking' as *;
+
+/*
+ * Базовые стили для body.
+ * Используем CSS-переменные (var(--color-bg)), а не SCSS ($color-bg).
+ * Это позволяет переключать темы через JavaScript без перезагрузки.
+ * Transition даёт плавный переход при смене темы.
+ */
+body {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 20px;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+h1 {
+    font-family: var(--font-heading);
+    color: var(--color-accent-primary);
+}

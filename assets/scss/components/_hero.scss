@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Hero-секция (первый экран)
+   ========================================================================== */
+
+.hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 40px 0;
+    background: radial-gradient(
+        ellipse at 70% 50%,
+        rgba(255, 107, 53, 0.08) 0%,
+        var(--color-bg-secondary) 30%,
+        var(--color-bg-primary) 70%
+    );
+    position: relative;
+    overflow: hidden;
+    transition: background var(--transition-speed);
+    
+    // Декоративный блоб справа (за фото)
+    &__blob {
+        position: absolute;
+        // Сдвигаем правее, чтобы блоб был за фото, а не на нём
+        right: -200px;
+        top: 50%;
+        transform: translateY(-50%);
+        // Увеличиваем размер — блоб будет виден от центра до правого края
+        width: 800px;
+        height: 800px;
+        mask-image: url('../images/blob-hero.svg');
+        -webkit-mask-image: url('../images/blob-hero.svg');
+        mask-repeat: no-repeat;
+        mask-size: contain;
+        background-color: var(--color-accent-primary);
+        z-index: 0;
+        pointer-events: none;
+    }
+      
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        width: 100%;
+    }
+    
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    &__eyebrow {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent-primary);
+        transition: color var(--transition-speed);
+    }
+    
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 56px;
+        font-weight: 700;
+        line-height: 1.1;
+        color: var(--color-text-primary);
+        margin: 0;
+        transition: color var(--transition-speed);
+    }
+    
+    &__subtitle {
+        font-family: var(--font-body);
+        font-size: 18px;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin: 0;
+        transition: color var(--transition-speed);
+    }
+    
+    &__actions {
+        display: flex;
+        gap: 16px;
+        margin-top: 8px;
+    }
+    
+    &__image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    &__photo {
+        width: 500px;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 50%;
+        // Двухслойное свечение: большое мягкое (оранжевый) + тень снизу
+        box-shadow: 
+            0 0 120px rgba(255, 107, 53, 0.5),   // Большое оранжевое свечение (видно в обеих темах)
+            0 0 60px rgba(255, 107, 53, 0.3),    // Среднее свечение (усиливает эффект)
+            0 20px 60px rgba(0, 0, 0, 0.4);      // Тень снизу
+        position: relative;  // Добавь эту строку
+        z-index: 1; 
+        transition: all var(--transition-speed);
+        
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 
+                0 0 150px rgba(255, 107, 53, 0.6),
+                0 0 80px rgba(255, 107, 53, 0.4),
+                0 25px 70px rgba(0, 0, 0, 0.5);
+        }
+    }
+}
+
+// Светлая тема — градиент с зелёным оттенком + свечение остаётся оранжевым (универсальный акцент)
+[data-theme="light"] {
+    .hero {
+        background: radial-gradient(
+            ellipse at 70% 50%,
+            rgba(45, 90, 39, 0.08) 0%,    // Лёгкий зелёный в центре
+            #ffffff 40%,
+            #f5f5f5 100%                   // Чуть темнее к краям
+        );
+    }
+    
+    .hero__photo {
+        // Зелёное свечение с увеличенной прозрачностью и радиусом
+        box-shadow: 
+            0 0 150px rgba(45, 90, 39, 0.5),   // Большое зелёное (увеличили радиус и прозрачность)
+            0 0 80px rgba(45, 90, 39, 0.3),    // Среднее зелёное
+            0 20px 60px rgba(0, 0, 0, 0.15);   // Мягкая тень
+        
+        &:hover {
+            box-shadow: 
+                0 0 180px rgba(45, 90, 39, 0.6),  // Ещё больше при наведении
+                0 0 100px rgba(45, 90, 39, 0.4),
+                0 25px 70px rgba(0, 0, 0, 0.2);
+        }
+    }
+}
+
+// Кнопки
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: var(--border-radius);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    
+    &--primary {
+        background-color: var(--color-accent-primary);
+        color: #ffffff;
+        border: 2px solid var(--color-accent-primary);
+        
+        &:hover {
+            background-color: var(--color-accent-terracotta);
+            border-color: var(--color-accent-terracotta);
+        }
+    }
+    
+    &--outline {
+        background-color: transparent;
+        color: var(--color-text-primary);
+        border: 2px solid var(--color-border);
+        
+        &:hover {
+            border-color: var(--color-accent-primary);
+            color: var(--color-accent-primary);
+        }
+    }
+}
+
+// Адаптив: мобильные
+@media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        padding: 60px 0;
+        
+        &__container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+        
+        &__title {
+            font-size: 40px;
+        }
+        
+        &__subtitle {
+            font-size: 16px;
+        }
+        
+        &__actions {
+            flex-direction: column;
+        }
+        
+        &__photo {
+            width: 350px;
+            height: 350px;
+        }
+    }
+}

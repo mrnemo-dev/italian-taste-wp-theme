@@ -1,0 +1,164 @@
+/* ==========================================================================
+   Секция "Отзывы"
+   ========================================================================== */
+
+.reviews {
+    padding: 100px 0;
+    background-color: var(--color-bg-primary);
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--transition-speed);
+
+    // Волна сверху (соединяет reviews с showcase)
+    &::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C360,100 720,0 1080,50 C1260,75 1380,60 1440,50 L1440,0 L0,0 Z' fill='%231a1a1a'/%3E%3C/svg%3E");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    // Для светлой темы меняем цвет волны
+    [data-theme="light"] &::before {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 100' preserveAspectRatio='none'%3E%3Cpath d='M0,50 C360,100 720,0 1080,50 C1260,75 1380,60 1440,50 L1440,0 L0,0 Z' fill='%23f8f9fa'/%3E%3C/svg%3E");
+    }
+
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    &__eyebrow {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent-primary);
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0 0 60px;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+}
+
+.review-card {
+    background-color: var(--color-bg-card);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    text-align: left;
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-speed);
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    &__avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: var(--color-accent-primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-heading);
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    &__meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__name {
+        font-family: var(--font-body);
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0;
+    }
+
+    &__stars {
+        color: var(--color-accent-secondary);
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+    &__text {
+        font-family: var(--font-body);
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin: 0;
+        font-style: italic;
+    }
+}
+
+// Декоративные точки
+.reviews__dots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.reviews__dot {
+    position: absolute;
+    border-radius: 50%;
+    background-color: var(--color-accent-primary);
+    opacity: 0.3;
+    transition: background-color var(--transition-speed);
+}
+
+// Адаптив: убираем точки на мобильных
+@media (max-width: 768px) {
+    .reviews__dots {
+        display: none;
+    }
+}
+
+// Адаптив
+@media (max-width: 992px) {
+    .reviews__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+    .reviews__grid { grid-template-columns: 1fr; }
+    .reviews__title { font-size: 36px; }
+}

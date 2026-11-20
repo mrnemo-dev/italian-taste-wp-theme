@@ -1,0 +1,280 @@
+/* ==========================================================================
+   Секция "Бронирование"
+   ========================================================================== */
+
+.booking {
+    padding: 100px 0;
+    background-color: var(--color-bg-secondary);
+    position: relative;
+    overflow: hidden;
+    transition: background-color var(--transition-speed);
+
+    &__wave {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        z-index: 1;
+        pointer-events: none;
+        
+        svg { width: 100%; height: 100%; display: block; }
+    }
+
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+    }
+
+    &__eyebrow {
+        font-family: var(--font-body);
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent-primary);
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0 0 20px;
+        line-height: 1.1;
+    }
+
+    &__desc {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin-bottom: 30px;
+    }
+
+    &__features {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--color-text-primary);
+        font-weight: 600;
+    }
+}
+
+.booking-form {
+    background-color: var(--color-bg-card);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+
+    /*
+     * Страховка от переполнения.
+     * Flatpickr подмешивает к input служебные атрибуты, а наш padding-right
+     * (под иконку календаря) без border-box растягивал поле за границы карточки.
+     * border-box = width:100% включает padding и border, поле физически не может
+     * вылезти за родителя.
+     */
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    &__group {
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            padding: 14px 16px;
+            background-color: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            font-size: 16px;
+            transition: all var(--transition-speed);
+
+            &:focus {
+                outline: none;
+                border-color: var(--color-accent-primary);
+                box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            }
+            
+            &::placeholder {
+                color: var(--color-text-muted);
+                opacity: 0.7;
+            }
+        }
+    }
+
+    // Ряд "Дата + Время" — вертикальный столбик (см. комментарий ниже).
+    // Flatpickr фиксированной ширины ~307px; в 2-колоночной сетке календарь
+    // наезжал на поле времени. В столбике перекрывать нечего.
+    &__row {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin-bottom: 20px;
+        
+        .booking-form__group {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.btn--full { width: 100%; margin-top: 10px; }
+
+// ==========================================================================
+// Select — кастомная стрелка
+// ==========================================================================
+.booking-form select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 16px center !important;
+    background-size: 20px !important;
+    padding-right: 48px !important;
+    cursor: pointer;
+    
+    option {
+        background-color: var(--color-bg-card);
+        color: var(--color-text-primary);
+        padding: 12px;
+    }
+}
+
+[data-theme="light"] .booking-form select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232d5a27' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+}
+
+// ==========================================================================
+// Поле даты — иконка календаря + защита от переполнения
+// ==========================================================================
+.booking-form input[type="text"]#date {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff6b35' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 20px;
+    padding-right: 48px;
+    cursor: pointer;
+}
+
+[data-theme="light"] .booking-form input[type="text"]#date {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232d5a27' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E");
+}
+
+// ==========================================================================
+// Flatpickr — календарь в дизайн-системе
+// ==========================================================================
+.flatpickr-calendar {
+    background-color: var(--color-bg-card) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4) !important;
+    font-family: var(--font-body) !important;
+    
+    .flatpickr-months .flatpickr-month {
+        background-color: var(--color-bg-card) !important;
+        color: var(--color-text-primary) !important;
+    }
+    
+    .flatpickr-current-month .flatpickr-monthDropdown-months,
+    .flatpickr-current-month input.cur-year {
+        color: var(--color-text-primary) !important;
+        font-weight: 700 !important;
+    }
+    
+    .flatpickr-months .flatpickr-prev-month,
+    .flatpickr-months .flatpickr-next-month {
+        fill: var(--color-accent-primary) !important;
+        &:hover { fill: var(--color-accent-terracotta) !important; }
+        svg { fill: var(--color-accent-primary) !important; }
+    }
+    
+    .flatpickr-weekdays {
+        background-color: var(--color-bg-secondary) !important;
+        .flatpickr-weekday {
+            color: var(--color-text-muted) !important;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+    }
+    
+    .flatpickr-days .dayContainer .flatpickr-day {
+        color: var(--color-text-primary) !important;
+        border-radius: 6px !important;
+        border: 1px solid transparent !important;
+        
+        &:hover {
+            background-color: var(--color-bg-secondary) !important;
+            border-color: var(--color-border) !important;
+        }
+        
+        &.today {
+            border-color: var(--color-accent-primary) !important;
+            color: var(--color-accent-primary) !important;
+            background-color: transparent !important;
+        }
+        
+        &.selected, &.startRange, &.endRange {
+            background-color: var(--color-accent-primary) !important;
+            border-color: var(--color-accent-primary) !important;
+            color: #ffffff !important;
+            &:hover { background-color: var(--color-accent-terracotta) !important; }
+        }
+        
+        &.flatpickr-disabled {
+            color: var(--color-text-muted) !important;
+            opacity: 0.4 !important;
+            cursor: not-allowed !important;
+            background-color: transparent !important;
+        }
+    }
+}
+
+[data-theme="light"] .flatpickr-calendar {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+}
+
+// ==========================================================================
+// Адаптив
+// ==========================================================================
+@media (max-width: 992px) {
+    .booking__container { grid-template-columns: 1fr; gap: 40px; }
+    .booking__title { font-size: 36px; }
+}
+@media (max-width: 576px) {
+    .booking-form { padding: 24px; }
+}
