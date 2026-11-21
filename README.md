@@ -3,6 +3,7 @@
 Кастомная тема WordPress для итальянского ресторана с доставкой. Разработана с нуля без использования конструкторов (Elementor, WPBakery).
 
 ![Italian Taste](screenshot.png)
+🎥 **Демо-видео:** https://youtu.be/watch?v=hhuHC5aRh-o
 
 ## 🎯 Особенности
 
