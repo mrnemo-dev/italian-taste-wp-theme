@@ -87,14 +87,14 @@ add_action( 'wp_enqueue_scripts', 'it_enqueue_gsap' );
 /**
  * Подключаем анимации меню
  */
-function it_enqueue_menu_animations() {
-    wp_enqueue_script(
-        'italian-taste-menu-animations',
-        ITALIAN_TASTE_URI . '/assets/js/menu-animations.js',
-        array('gsap-core', 'gsap-scrolltrigger', 'italian-taste-menu'),
+ function it_enqueue_menu_animations() {
+     wp_enqueue_script(
+         'italian-taste-menu-animations',
+         ITALIAN_TASTE_URI . '/assets/js/menu-animations.js',
+         array('gsap-core', 'gsap-scrolltrigger', 'italian-taste-menu'),
         '1.0.0',
-        true
-    );
+       true
+     );
 }
 add_action( 'wp_enqueue_scripts', 'it_enqueue_menu_animations' );
 
@@ -166,3 +166,31 @@ function it_enqueue_scroll_animations() {
     );
 }
 add_action( 'wp_enqueue_scripts', 'it_enqueue_scroll_animations' );
+
+/**
+ * Подключаем логику корзины
+ */
+function it_enqueue_cart() {
+    wp_enqueue_script(
+        'italian-taste-cart',
+        ITALIAN_TASTE_URI . '/assets/js/cart.js',
+        array(),
+        '1.0.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'it_enqueue_cart' );
+
+/**
+ * Подключаем логику мобильного меню
+ */
+function it_enqueue_mobile_menu() {
+    wp_enqueue_script(
+        'italian-taste-mobile-menu',
+        ITALIAN_TASTE_URI . '/assets/js/mobile-menu.js',
+        array(),
+        '1.0.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'it_enqueue_mobile_menu' );

@@ -14,7 +14,7 @@
  */
 ?>
 
-<section class="about animate-on-scroll">
+<section class="about animate-on-scroll" id="about">
     <!-- Декоративный blob: цвет = акцент текущей темы, обрезан справа -->
     <div class="about__blob" aria-hidden="true"></div>
 

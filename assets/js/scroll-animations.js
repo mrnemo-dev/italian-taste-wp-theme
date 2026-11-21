@@ -1,143 +1,96 @@
 /**
- * ScrollTrigger анимации для всех секций
- * 
- * Логика:
- * - Все секции с классом .animate-on-scroll начинаются с opacity: 0 и смещением вниз
- * - При появлении в viewport (на 80% высоты экрана) добавляется класс .is-visible
- * - CSS transition делает плавное появление
- * - Дочерние элементы (карточки, заголовки) появляются с задержкой (stagger)
+ * ScrollTrigger анимации появления секций (Стабильная версия)
+ * Без invalidateOnRefresh, чтобы не крашиться при lazy-load картинках
  */
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Если GSAP нет — делаем всё видимым сразу и выходим
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-        console.warn('GSAP или ScrollTrigger не загружены');
+        document.querySelectorAll('.animate-on-scroll, .animate-child').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
         return;
     }
 
-    // Регистрируем плагин
+    // 2. Если на странице нет наших секций — выходим, не трогая ScrollTrigger
+    if (!document.querySelector('.animate-on-scroll')) {
+        return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
-    // Анимация для всех секций
-    const sections = document.querySelectorAll('.animate-on-scroll');
-    
-    sections.forEach(section => {
-        // Находим дочерние элементы для stagger-анимации
+    // 3. Анимация секций (простой fromTo, без сложных таймлайнов)
+    document.querySelectorAll('.animate-on-scroll').forEach(section => {
         const children = section.querySelectorAll('.animate-child');
         
-        // Создаём timeline
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: section,
-                start: 'top 80%', // Анимация начинается, когда верх секции на 80% высоты viewport
-                end: 'bottom 20%',
-                toggleActions: 'play none none none', // Проигрываем один раз
-                once: true // Только один раз
-            }
-        });
-
-        // Анимация самой секции (fade + slide up)
-        tl.fromTo(section, 
+        // Анимация самой секции
+        gsap.fromTo(section,
+            { opacity: 0, y: 60 },
             {
-                opacity: 0,
-                y: 60
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                ease: 'power3.out'
+                opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: { trigger: section, start: 'top 85%', once: true }
             }
         );
 
-        // Анимация дочерних элементов с задержкой
-        if (children.length > 0) {
-            tl.fromTo(children,
-                {
-                    opacity: 0,
-                    y: 30
-                },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    stagger: 0.1, // Задержка между элементами
-                    ease: 'power2.out'
-                },
-                '-=0.4' // Начинаем чуть раньше, чем закончится анимация секции
+        // Анимация дочерних элементов с небольшой задержкой
+        if (children.length) {
+            gsap.fromTo(children,
+                { opacity: 0, y: 30 },
+                { 
+                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', 
+                    delay: 0.2, // Простая задержка вместо сложного timeline
+                    scrollTrigger: { trigger: section, start: 'top 85%', once: true }
+                }
             );
         }
     });
 
-    // Специальная анимация для киллер-фичи (showcase)
-    // Блюдо «влетает» с эффектом пружины
+    // 4. Киллер-фича (только если элемент есть на странице)
     const showcaseDish = document.querySelector('.showcase__dish.active');
     if (showcaseDish) {
         gsap.fromTo(showcaseDish,
+            { scale: 0.3, rotation: -30, opacity: 0 },
             {
-                scale: 0.3,
-                rotation: -30,
-                opacity: 0
-            },
-            {
-                scale: 1,
-                rotation: -5,
-                opacity: 1,
-                duration: 1.2,
-                ease: 'back.out(1.4)',
-                scrollTrigger: {
-                    trigger: '.showcase',
-                    start: 'top 70%',
-                    once: true
-                }
+                scale: 1, rotation: -5, opacity: 1, duration: 1.2, ease: 'back.out(1.4)',
+                scrollTrigger: { trigger: '.showcase', start: 'top 70%', once: true }
             }
         );
     }
 
-    // Анимация для карточек меню (stagger при появлении)
+    // 5. Карточки меню
     const menuCards = document.querySelectorAll('.dish-card');
-    if (menuCards.length > 0) {
+    if (menuCards.length) {
         gsap.fromTo(menuCards,
+            { opacity: 0, y: 50, scale: 0.9 },
             {
-                opacity: 0,
-                y: 50,
-                scale: 0.9
-            },
-            {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: 'power3.out',
-                scrollTrigger: {
-                    trigger: '.menu__grid',
-                    start: 'top 80%',
-                    once: true
-                }
+                opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
+                scrollTrigger: { trigger: '.menu__grid', start: 'top 85%', once: true }
             }
         );
     }
 
-    // Анимация для отзывов (карточки появляются по очереди)
+    // 6. Отзывы
     const reviewCards = document.querySelectorAll('.review-card');
-    if (reviewCards.length > 0) {
+    if (reviewCards.length) {
         gsap.fromTo(reviewCards,
+            { opacity: 0, x: -30 },
             {
-                opacity: 0,
-                x: -30
-            },
-            {
-                opacity: 1,
-                x: 0,
-                duration: 0.6,
-                stagger: 0.15,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: '.reviews__grid',
-                    start: 'top 80%',
-                    once: true
-                }
+                opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out',
+                scrollTrigger: { trigger: '.reviews__grid', start: 'top 85%', once: true }
             }
         );
     }
+
+    // 7. БЕЗОПАСНЫЙ refresh после загрузки страницы
+    // Даём 500мс на то, чтобы lazy-картинки встали на место, затем тихо обновляем триггеры
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            try {
+                ScrollTrigger.refresh();
+            } catch (e) {
+                // Игнорируем ошибки refresh, чтобы не ломать сайт
+                console.warn('ScrollTrigger refresh skipped');
+            }
+        }, 500);
+    });
 });

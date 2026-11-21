@@ -373,3 +373,43 @@
         }
     }
 }
+// Адаптив модалки на мобильных
+@media (max-width: 768px) {
+    .modal {
+        &__content {
+            width: 95%;
+            max-height: 95vh;
+        }
+
+        &__body {
+            grid-template-columns: 1fr;
+        }
+
+        &__image {
+            min-height: 250px;
+            max-height: 300px;
+        }
+
+        &__info {
+            padding: 24px;
+        }
+
+        &__title {
+            font-size: 24px;
+        }
+
+        &__price {
+            font-size: 24px;
+        }
+
+        &__footer {
+            flex-direction: column;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        &__footer .btn {
+            width: 100%;
+        }
+    }
+}

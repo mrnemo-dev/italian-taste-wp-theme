@@ -83,7 +83,8 @@
             });
         });
     });
-
+// На страницах без модалки (например, служебная /menu/) — выходим молча
+if (!modal) return;
     // Открытие модального окна
     document.querySelectorAll('.dish-card__btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -101,6 +102,16 @@
 
                 modal.classList.add('active');
                 document.body.style.overflow = 'hidden'; // Блокируем скролл страницы
+                
+                // Когда модалка открывается и данные блюда подставляются, обновляем и кнопку корзины:
+                const modalCartBtn = document.getElementById('modalAddToCartBtn');
+                if (modalCartBtn) {
+                    modalCartBtn.dataset.id = dishSlug;                                  // уникальный ключ — slug
+                    modalCartBtn.dataset.name = dish.name;
+                    modalCartBtn.dataset.price = dish.price;
+                    modalCartBtn.dataset.image = document.getElementById('modalImage').src; // берём уже готовый src
+                }
+
             }
         });
     });

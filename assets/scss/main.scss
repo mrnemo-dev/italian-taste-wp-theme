@@ -18,6 +18,8 @@
 @use 'components/footer' as *;
 @use 'components/reviews' as *;
 @use 'components/booking' as *;
+@use 'components/cart' as *;
+@use 'components/blog' as *;
 
 /*
  * Базовые стили для body.
@@ -30,11 +32,167 @@ body {
     color: var(--color-text-primary);
     font-family: var(--font-body);
     margin: 0;
-    padding: 20px;
     transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 h1 {
     font-family: var(--font-heading);
     color: var(--color-accent-primary);
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+section[id], footer[id] {
+    scroll-margin-top: 90px; // чтобы фиксированный хедер не перекрывал заголовок секции
+}
+
+/* Страховка: если JS отключён или упал, контент всё равно виден */
+.no-js .animate-on-scroll,
+.no-js .animate-child {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* ==========================================================================
+   Mobile tweaks — единый адаптив для секций, у которых своего @media нет
+   (menu, blog, footer, showcase уже адаптированы в своих файлах)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+
+    // --- Типографика: уменьшаем крупные заголовки ---
+    .hero__title {
+        font-size: 36px;
+    }
+
+    .menu__title,
+    .showcase__title,
+    .about__title,
+    .features__title,
+    .reviews__title,
+    .booking__title {
+        font-size: 32px;
+    }
+
+    .menu__eyebrow,
+    .showcase__eyebrow,
+    .about__eyebrow,
+    .features__eyebrow,
+    .reviews__eyebrow,
+    .booking__eyebrow {
+        font-size: 12px;
+        letter-spacing: 1.5px;
+    }
+
+    // --- Hero: из 2 колонок в 1, текст сверху, фото снизу ---
+    .hero__container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+        padding-top: 40px;
+    }
+
+    .hero__content {
+        order: 1;
+    }
+
+    .hero__image {
+        order: 2;
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .hero__photo {
+        width: 100%;
+        height: auto;
+    }
+
+    // Блоб уменьшаем, чтобы не вылезал за экран
+    .hero__blob {
+        width: 280px;
+        height: 280px;
+    }
+
+    .hero__actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    // --- О нас: коллаж в 1 колонку ---
+    .about__container {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .about__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    // --- Преимущества: 3 карточки в 1 колонку ---
+    .features__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    // --- Отзывы: 3 карточки в 1 колонку ---
+    .reviews__grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    // --- Бронирование: форма на всю ширину ---
+    .booking__container {
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .booking__form {
+        width: 100%;
+    }
+
+    .booking__form-row {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    // --- Общие отступы секций на мобильных ---
+    .hero,
+    .about,
+    .features,
+    .reviews,
+    .booking {
+        padding: 60px 0;
+    }
+
+    // --- Кнопки на мобильных — крупнее тач-таргет ---
+    .btn,
+    .btn-reserve,
+    .btn--primary,
+    .btn--outline {
+        padding: 14px 24px;
+        font-size: 16px;
+    }
+}
+
+// Очень узкие экраны (маленькие телефоны)
+@media (max-width: 480px) {
+    .hero__title {
+        font-size: 30px;
+    }
+
+    .about__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero__photo {
+        width: 260px;
+        height: 260px;
+    }
 }

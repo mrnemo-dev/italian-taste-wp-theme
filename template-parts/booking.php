@@ -3,7 +3,7 @@
  * Шаблон секции "Бронирование"
  */
 ?>
-<section class="booking animate-on-scroll">
+<section class="booking animate-on-scroll" id="booking">
     <!-- Волна сверху -->
     <div class="booking__wave" aria-hidden="true">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none">

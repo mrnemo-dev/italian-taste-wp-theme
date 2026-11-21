@@ -3,7 +3,7 @@
  * Шаблон секции "Отзывы"
  */
 ?>
-<section class="reviews animate-on-scroll">
+<section class="reviews animate-on-scroll" id="reviews">
     <!-- Декоративные точки (хаотично разбросаны) -->
     <div class="reviews__dots" aria-hidden="true">
         <span class="reviews__dot" style="width: 8px; height: 8px; top: 15%; left: 5%;"></span>

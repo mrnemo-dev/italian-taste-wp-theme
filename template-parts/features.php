@@ -13,7 +13,7 @@
  */
 ?>
 
-<section class="features animate-on-scroll">
+<section class="features animate-on-scroll" id="features">
     <!-- Волнистый разделитель сверху -->
     <div class="features__wave" aria-hidden="true">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none">

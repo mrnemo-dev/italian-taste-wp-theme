@@ -1,42 +1,45 @@
 <?php
 /**
  * Шаблон Hero-секции (первый экран)
- * 
- * Структура:
- * - Двухколоночная сетка: текст слева, фото справа
- * - На мобильных — одна колонка (текст сверху, фото снизу)
- * - Высота ~90vh для эффекта "первого экрана"
- * 
- * Почему template-parts:
- * - front-page.php собирает страницу из таких частей
- * - Каждый блок изолирован, легко править/переиспользовать
+ * Данные подтягиваются из ACF.
  */
+
+// Получаем данные из ACF. Если поле пустое — запасной вариант.
+$eyebrow   = get_field('hero_eyebrow') ?: 'Аутентичная итальянская кухня';
+$title     = get_field('hero_title') ?: 'Вкус, созданный с душой';
+$subtitle  = get_field('hero_subtitle') ?: 'Настоящая карбонара, свежая паста ручной работы и атмосфера итальянской траттории в сердце города.';
+$image_url = get_field('hero_image');
+
+if (empty($image_url)) {
+    $image_url = get_template_directory_uri() . '/assets/images/carbonara.webp';
+}
 ?>
 
 <section class="hero animate-on-scroll">
+    <!-- Декоративный блоб справа -->
+    <div class="hero__blob" aria-hidden="true"></div>
+
     <div class="hero__container">
         <!-- Левая колонка: текст -->
         <div class="hero__content">
-            <span class="hero__eyebrow">Аутентичная итальянская кухня</span>
-            <h1 class="hero__title">Вкус, созданный с душой</h1>
-            <p class="hero__subtitle">
-                Настоящая карбонара, свежая паста ручной работы и атмосфера итальянской траттории в сердце города.
-            </p>
-            <div class="hero__actions">
+            <span class="hero__eyebrow animate-child"><?php echo esc_html($eyebrow); ?></span>
+            <h1 class="hero__title animate-child"><?php echo esc_html($title); ?></h1>
+            <p class="hero__subtitle animate-child"><?php echo esc_html($subtitle); ?></p>
+            <div class="hero__actions animate-child">
                 <a href="#booking" class="btn btn--primary">Забронировать стол</a>
                 <a href="#menu" class="btn btn--outline">Смотреть меню</a>
             </div>
         </div>
         
         <!-- Правая колонка: фото -->
-        <div class="hero__image">
+        <div class="hero__image animate-child">
             <img 
-                src="<?php echo ITALIAN_TASTE_URI; ?>/assets/images/carbonara.webp" 
-                alt="Спагетти карбонара с жидким желтком, гуанчале и пармезаном" 
+                src="<?php echo esc_url($image_url); ?>" 
+                alt="Спагетти карбонара" 
                 class="hero__photo"
+                width="500"
+                height="500"
             >
         </div>
     </div>
-    <!-- Декоративный блоб справа -->
-    <div class="hero__blob" aria-hidden="true"></div>
 </section>

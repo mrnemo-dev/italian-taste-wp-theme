@@ -50,7 +50,7 @@ $dishes = array(
 );
 ?>
 
-<section class="showcase animate-on-scroll">
+<section class="showcase animate-on-scroll" id="popular">
     <div class="showcase__container">
         <span class="showcase__eyebrow">Выбор гостей</span>
         <h2 class="showcase__title">Популярные блюда</h2>

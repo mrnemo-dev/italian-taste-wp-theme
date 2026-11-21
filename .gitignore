@@ -1,0 +1,23 @@
+# Секреты и конфиги
+wp-config.php
+.env
+*.key
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (если вдруг понадобится)
+node_modules/
+
+# Скомпилированный CSS — оставляем или нет, на выбор
+# assets/css/main.css
+# assets/css/main.css.map
+
+# Логи
+*.log

@@ -3,7 +3,7 @@
  * Шаблон футера
  */
 ?>
-<footer class="site-footer">
+<footer class="site-footer" id="contacts">
     <!-- Волна сверху для плавного перехода -->
     <div class="site-footer__wave" aria-hidden="true">
         <svg viewBox="0 0 1440 100" preserveAspectRatio="none">

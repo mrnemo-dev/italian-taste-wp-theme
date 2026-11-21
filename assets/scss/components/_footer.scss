@@ -184,3 +184,17 @@
         }
     }
 }
+
+// На страницах блога волна не нужна: переход blog → footer однотонный.
+// Прячем волну и убираем запас под неё.
+body.blog,
+body.single,
+body.archive {
+    .site-footer__wave {
+        display: none;
+    }
+
+    .site-footer {
+        padding-top: 60px; // было 100px под волну
+    }
+}

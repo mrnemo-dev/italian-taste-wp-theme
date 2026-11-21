@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Блог: Архив и одиночная запись
+   ========================================================================== */
+
+.blog-archive {
+    padding: 120px 0 80px;
+    background-color: var(--color-bg-primary);
+    min-height: 60vh;
+
+    &__container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    &__header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    &__eyebrow {
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--color-accent-primary);
+        display: block;
+        margin-bottom: 16px;
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 48px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        margin: 0 0 16px;
+    }
+
+    &__desc {
+        max-width: 600px;
+        margin: 0 auto;
+        color: var(--color-text-secondary);
+        line-height: 1.6;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-bottom: 60px;
+    }
+
+    &__pagination {
+        display: flex;
+        justify-content: center;
+        
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            
+            a, span {
+                padding: 10px 16px;
+                border: 1px solid var(--color-border);
+                border-radius: 6px;
+                color: var(--color-text-primary);
+                text-decoration: none;
+                font-weight: 600;
+                transition: all var(--transition-speed);
+                
+                &:hover, &.current {
+                    background-color: var(--color-accent-primary);
+                    border-color: var(--color-accent-primary);
+                    color: #fff;
+                }
+            }
+        }
+    }
+    
+    &__empty {
+        text-align: center;
+        font-size: 18px;
+        color: var(--color-text-muted);
+        padding: 60px 0;
+    }
+}
+
+// Карточка поста
+.post-card {
+    background-color: var(--color-bg-card);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    &__image {
+        display: block;
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-speed);
+        }
+    }
+
+    &:hover &__image img {
+        transform: scale(1.05);
+    }
+
+    &__content {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--color-text-muted);
+        margin-bottom: 12px;
+    }
+
+    &__category {
+        color: var(--color-accent-primary);
+        font-weight: 600;
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 12px;
+        line-height: 1.3;
+
+        a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+
+            &:hover {
+                color: var(--color-accent-primary);
+            }
+        }
+    }
+
+    &__excerpt {
+        font-size: 15px;
+        line-height: 1.6;
+        color: var(--color-text-secondary);
+        margin: 0 0 20px;
+        flex: 1;
+    }
+
+    &__link {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--color-accent-primary);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: gap var(--transition-speed);
+
+        &:hover {
+            gap: 8px;
+        }
+    }
+}
+
+// 1. Отступы и фон задаём ТОЛЬКО для тега <main>, чтобы не ломать <body>
+main.single-post {
+    padding: 120px 0 80px;
+    background-color: var(--color-bg-primary);
+}
+
+// 2. Все внутренние элементы остаются как есть
+.single-post {
+    &__container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    &__back {
+        margin-bottom: 40px;
+
+        a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color var(--transition-speed);
+
+            &:hover {
+                color: var(--color-accent-primary);
+            }
+        }
+    }
+
+    &__header {
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    &__meta {
+        font-size: 14px;
+        color: var(--color-text-muted);
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        a {
+            color: var(--color-accent-primary);
+            text-decoration: none;
+        }
+    }
+
+    &__title {
+        font-family: var(--font-heading);
+        font-size: 42px;
+        font-weight: 700;
+        color: var(--color-text-primary);
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    &__featured-image {
+        width: 100%;
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        margin-bottom: 40px;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    }
+
+    &__content {
+        font-size: 18px;
+        line-height: 1.8;
+        color: var(--color-text-secondary);
+
+        h2, h3, h4 {
+            font-family: var(--font-heading);
+            color: var(--color-text-primary);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        h2 { font-size: 32px; }
+        h3 { font-size: 24px; }
+
+        p { margin-bottom: 24px; }
+
+        ul, ol {
+            margin-bottom: 24px;
+            padding-left: 24px;
+            
+            li { margin-bottom: 12px; }
+        }
+
+        blockquote {
+            border-left: 4px solid var(--color-accent-primary);
+            padding-left: 24px;
+            margin: 32px 0;
+            font-style: italic;
+            color: var(--color-text-primary);
+            font-size: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 32px 0;
+        }
+    }
+
+    &__tags {
+        margin-top: 60px;
+        padding-top: 30px;
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        color: var(--color-text-muted);
+
+        &__tag {
+            padding: 6px 12px;
+            background-color: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: 99px;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-speed);
+
+            &:hover {
+                border-color: var(--color-accent-primary);
+                color: var(--color-accent-primary);
+            }
+        }
+    }
+}
+
+// Адаптив
+@media (max-width: 992px) {
+    .blog-archive__grid { grid-template-columns: repeat(2, 1fr); }
+    .single-post__title { font-size: 36px; }
+}
+
+@media (max-width: 576px) {
+    .blog-archive__grid { grid-template-columns: 1fr; }
+    .blog-archive__title { font-size: 36px; }
+    .single-post__title { font-size: 28px; }
+    .single-post__content { font-size: 16px; }
+}
